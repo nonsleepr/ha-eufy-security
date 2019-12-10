@@ -1,6 +1,7 @@
 """Define support for Eufy Security cameras/doorbells."""
 import asyncio
 import logging
+from enum import Enum
 
 from eufy_security.errors import EufySecurityError
 from haffmpeg.camera import CameraMjpeg
@@ -56,12 +57,18 @@ class EufySecurityCam(Camera):
     @property
     def device_state_attributes(self):
         """Return the state attributes."""
-        return {
+        attributes = {
             ATTR_ATTRIBUTION: DEFAULT_ATTRIBUTION,
             ATTR_HARDWARE_VERSION: self._camera.hardware_version,
             ATTR_SERIAL: self._camera.serial,
             ATTR_SOFTWARE_VERSION: self._camera.software_version,
         }
+        for k, v in self._camera.params.items():
+            if isinstance(k, Enum):
+                attributes[k.name.lower()] = v
+            else:
+                attributes[str(k)] = v
+        return attributes
 
     @property
     def model(self):
@@ -101,6 +108,14 @@ class EufySecurityCam(Camera):
             self._last_image_url = self._camera.last_camera_image_url
 
         return self._last_image
+
+    async def async_disable_motion_detection(self):
+        """Disable doorbell's motion detection"""
+        await self._camera.async_stop_detection()
+
+    async def async_enable_motion_detection(self):
+        """Enable doorbell's motion detection"""
+        await self._camera.async_start_detection()
 
     async def async_turn_off(self):
         """Turn off the RTSP stream."""
