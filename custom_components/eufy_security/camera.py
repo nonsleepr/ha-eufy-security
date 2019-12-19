@@ -57,18 +57,12 @@ class EufySecurityCam(Camera):
     @property
     def device_state_attributes(self):
         """Return the state attributes."""
-        attributes = {
+        return {
             ATTR_ATTRIBUTION: DEFAULT_ATTRIBUTION,
             ATTR_HARDWARE_VERSION: self._camera.hardware_version,
             ATTR_SERIAL: self._camera.serial,
             ATTR_SOFTWARE_VERSION: self._camera.software_version,
         }
-        for k, v in self._camera.params.items():
-            if isinstance(k, Enum):
-                attributes[k.name.lower()] = v
-            else:
-                attributes[str(k)] = v
-        return attributes
 
     @property
     def model(self):
