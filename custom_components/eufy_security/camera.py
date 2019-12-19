@@ -131,6 +131,7 @@ class EufySecurityCam(Camera):
 
     async def handle_async_mjpeg_stream(self, request):
         """Generate an HTTP MJPEG stream from the camera."""
+        await self.async_turn_on()
         if not self._stream_url:
             return await self.async_camera_image()
 
