@@ -57,12 +57,18 @@ class EufySecurityCam(Camera):
     @property
     def device_state_attributes(self):
         """Return the state attributes."""
-        return {
+        attributes = {
             ATTR_ATTRIBUTION: DEFAULT_ATTRIBUTION,
             ATTR_HARDWARE_VERSION: self._camera.hardware_version,
             ATTR_SERIAL: self._camera.serial,
             ATTR_SOFTWARE_VERSION: self._camera.software_version,
         }
+        for k, v in self._camera.params.items():
+            if isinstance(k, Enum):
+                attributes[k.name.lower()] = v
+            else:
+                attributes[str(k)] = v
+        return attributes
 
     @property
     def model(self):
@@ -131,7 +137,6 @@ class EufySecurityCam(Camera):
 
     async def handle_async_mjpeg_stream(self, request):
         """Generate an HTTP MJPEG stream from the camera."""
-        await self.async_turn_on()
         if not self._stream_url:
             return await self.async_camera_image()
 
