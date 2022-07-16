@@ -1,9 +1,8 @@
 """Define support for Eufy Security cameras/doorbells."""
 import asyncio
 import logging
-from enum import Enum
 
-from eufy_security.errors import EufySecurityError
+from .eufy_security.errors import EufySecurityError
 from haffmpeg.camera import CameraMjpeg
 from haffmpeg.tools import ImageFrame, IMAGE_JPEG
 

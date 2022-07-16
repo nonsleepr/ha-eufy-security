@@ -1,5 +1,14 @@
 # Eufy Security integration for Home Assistant
 
+---
+
+**This is a fork of the below**
+
+This fork brings the dependency `python-eufy-security` into the repo, 
+as it by itself has dependencies that conflict with the current version of Home Assistant.
+
+---
+
 At this moment, this repo simply extracts [@bachya](https://github.com/bachya)'s [PR for Home Assistant](https://github.com/home-assistant/home-assistant/pull/28443) which uses [@FuzzyMistborn](https://github.com/FuzzyMistborn)'s package [`python-eufy-security`](https://github.com/FuzzyMistborn/python-eufy-security).
 
 ## Installation

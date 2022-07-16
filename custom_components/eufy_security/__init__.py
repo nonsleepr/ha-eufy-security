@@ -2,8 +2,8 @@
 from datetime import timedelta
 import logging
 
-from eufy_security import async_login
-from eufy_security.errors import EufySecurityError, InvalidCredentialsError
+from .eufy_security import async_login
+from .eufy_security.errors import EufySecurityError, InvalidCredentialsError
 import voluptuous as vol
 
 from homeassistant.config_entries import SOURCE_IMPORT
